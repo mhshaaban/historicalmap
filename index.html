@@ -59,6 +59,7 @@ svg .ferry_path {
 <body>
 
 <div id="map"></div>
+<script src="http://riccardoscalco.github.io/textures/textures.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
@@ -67,6 +68,13 @@ svg .ferry_path {
 
 var width = 960,
     height = 500;
+
+var t1 = textures.paths()
+  .d("waves")
+    .lighter()
+    .thicker()
+    .background("#4A79A5")
+    .stroke("white")
 
 var projection = d3.geo.mercator()
     .center([30.04,31.23])
@@ -79,6 +87,16 @@ var path = d3.geo.path()
 var svg = d3.select("#map").append("svg")
     .attr("width", width)
     .attr("height", height);
+    
+svg.call(t1);
+
+var getPattern;
+getPattern = function(province) {
+    switch (province.toLowerCase()) {
+      case "w":
+        return t1.url();
+    }
+  };     
 
 var defs = svg.append("defs");
 
@@ -168,6 +186,12 @@ d3.json("empire_all.json", function(error, empire_all) {
       .style("stroke", "#999")
       .style("stroke-width", 0.2);
 
+  svg.selectAll(".water")
+      .data(topojson.feature(empire_all, empire_all.objects.water).features)
+    .enter().append("path")
+      .attr("class", function(d) { return "subunit " + d.id; })
+      .style("fill", function(d) { return getPattern(d.id); })
+      .attr("d", path);
   
 });
 
