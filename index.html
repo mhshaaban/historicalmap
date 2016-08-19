@@ -182,6 +182,13 @@ d3.json("empire_all.json", function(error, empire_all) {
       .attr("d", path)
       .style("stroke", "#999")
       .style("stroke-width", 0.2);    
+
+   svg.selectAll(".water")
+      .data(topojson.feature(empire_all, empire_all.objects.water).features)
+    .enter().append("path")
+      .attr("class", function(d) { return "subunit " + d.id; })
+      .style("fill", function(d) { return getPattern(d.id); })
+      .attr("d", path);
   
 });
 
