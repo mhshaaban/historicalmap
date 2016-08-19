@@ -186,7 +186,7 @@ d3.json("empire_all.json", function(error, empire_all) {
    svg.selectAll(".water")
       .data(topojson.feature(empire_all, empire_all.objects.water).features)
     .enter().append("path")
-      .attr("class", function(d) { return "water" + d.id; })
+      .attr("class", function(d) { return "objects" + d.id; })
       .style("fill", function(d) { return getPattern(d.id); })
       .attr("d", path);
   
