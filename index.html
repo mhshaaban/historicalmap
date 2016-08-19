@@ -175,7 +175,7 @@ d3.json("empire_all.json", function(error, empire_all) {
       .style("stroke-width", 0.2);
       
    svg.selectAll(".Empire")
-    .data(topojson.feature(data, data.objects.Empire).features)
+    .data(topojson.feature(empire_all, empire_all.objects.Empire).features)
   .enter()
     .append("path")
       .attr("class", "Empire")
