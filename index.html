@@ -17,12 +17,6 @@ svg .bg, svg .bgback {
   fill-opacity: .23;
 }
 
-svg .water, svg .waterback {
-  stroke: none;
-  fill: #4A79A5;
-  fill-opacity: .5;
-}
-
 svg .other {
   stroke: #D1BEB0;
   stroke-opacity: .3;
@@ -77,8 +71,8 @@ var width = 960,
 var t1 = textures.paths()
   .d("waves")
     .lighter()
-    .thicker()
-    .background("white")
+    .thicker(2)
+    .background("transparent")
     .stroke("#4A79A5")
 
 var projection = d3.geo.mercator()
@@ -191,23 +185,12 @@ d3.json("empire_all.json", function(error, empire_all) {
       .style("stroke", "#999")
       .style("stroke-width", 0.2);
 
-  svg.selectAll(".waterback")
-      .data(topojson.feature(empire_all, empire_all.objects.water).features)
-    append("path")
-      .attr("class", "waterback")
-      .attr("d", path)
-      .style("filter","url(#oglow)")
-      .style("stroke", "#999")
-      .style("stroke-width", 0.2);
-      
   svg.selectAll(".water")
-      .data(topojson.feature(empire_all, empire_all.objects.water).features)
-    append("path")
-      .attr("class", "water")
-      .attr("d", path)
-      .style("filter","url(#myglow)")
-      .style("stroke", "#999")
-      .style("stroke-width", 0.2);    
+       .data(topojson.feature(empire_all, empire_all.objects.water).features)
+     .enter().append("path")
+       .attr("class", function(d) { return "subunit " + d.id; })
+       .style("fill", function(d) { return getPattern(d.id); })
+       .attr("d", path);    
   
 });
 
