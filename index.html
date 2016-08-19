@@ -183,8 +183,8 @@ d3.json("empire_all.json", function(error, empire_all) {
       .style("stroke", "#999")
       .style("stroke-width", 0.2);    
 
-   svg.selectAll(".water")
-       .data(topojson.feature(empire_all, empire_all.objects.water).features)
+   svg.selectAll(".ocean")
+       .data(topojson.feature(empire_all, empire_all.objects.ocean).features)
      .enter()
        .append("path")
        .attr("class", function(d) { return "subunit" + d.id; })
