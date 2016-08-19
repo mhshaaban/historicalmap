@@ -18,19 +18,7 @@ svg .bg, svg .bgback {
 }
 
 
-svg .other {
-  stroke: #D1BEB0;
-  stroke-opacity: .3;
-  fill: #D1BEB0;
-  fill-opacity: .23;
-  }
-
-svg .region:hover {
-  fill: #eda;
-  fill-opacity: .37;
-}
-
-svg .region {
+svg .Empire {
   stroke: #baa;
   stroke-opacity: 1;
   stroke-dasharray: 3,5;
@@ -59,6 +47,7 @@ svg .ferry_path {
 <body>
 
 <div id="map"></div>
+<script src="http://riccardoscalco.github.io/textures/textures.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
@@ -67,6 +56,13 @@ svg .ferry_path {
 
 var width = 960,
     height = 500;
+
+var t1 = textures.paths()
+  .d("waves")
+    .lighter()
+    .thicker(2)
+    .background("transparent")
+    .stroke("#4A79A5")
 
 var projection = d3.geo.mercator()
     .center([30.04,31.23])
@@ -79,6 +75,16 @@ var path = d3.geo.path()
 var svg = d3.select("#map").append("svg")
     .attr("width", width)
     .attr("height", height);
+    
+svg.call(t1);
+
+var getPattern;
+getPattern = function(province) {
+    switch (province.toLowerCase()) {
+      case "w":
+        return t1.url();
+    }
+  };     
 
 var defs = svg.append("defs");
 
@@ -149,7 +155,7 @@ var frMerge = myglow.append("feMerge");
 
 d3.json("empire_all.json", function(error, empire_all) {
     svg.selectAll(".bgback")
-    .data(topojson.feature(empire_all, empire_all.objects.other).features)
+    .data(topojson.feature(empire_all, empire_all.objects.land).features)
   .enter()
     .append("path")
       .attr("class", "bgback")
@@ -159,7 +165,7 @@ d3.json("empire_all.json", function(error, empire_all) {
       .style("stroke-width", 0.2);
 
   svg.selectAll(".bg")
-    .data(topojson.feature(empire_all, empire_all.objects.other).features)
+    .data(topojson.feature(empire_all, empire_all.objects.land).features)
   .enter()
     .append("path")
       .attr("class", "bg")
@@ -167,7 +173,15 @@ d3.json("empire_all.json", function(error, empire_all) {
       .style("filter","url(#myglow)")
       .style("stroke", "#999")
       .style("stroke-width", 0.2);
-
+      
+   svg.selectAll(".Empire")
+    .data(topojson.feature(empire_all, empire_all.objects.Empire).features)
+  .enter()
+    .append("path")
+      .attr("class", "Empire")
+      .attr("d", path)
+      .style("stroke", "#999")
+      .style("stroke-width", 0.2);    
   
 });
 
