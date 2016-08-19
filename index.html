@@ -17,18 +17,8 @@ svg .bg, svg .bgback {
   fill-opacity: .23;
 }
 
-svg .empire {
-  stroke: none;
-  fill: #fff;
-  fill-opacity: 1;
-}
 
-svg .region:hover {
-  fill: #eda;
-  fill-opacity: .37;
-}
-
-svg .region {
+svg .Empire {
   stroke: #baa;
   stroke-opacity: 1;
   stroke-dasharray: 3,5;
@@ -184,11 +174,11 @@ d3.json("empire_all.json", function(error, empire_all) {
       .style("stroke", "#999")
       .style("stroke-width", 0.2);
       
-   svg.selectAll(".empire")
+   svg.selectAll(".Empire")
     .data(topojson.feature(data, data.objects.Empire).features)
   .enter()
     .append("path")
-      .attr("class", "empire")
+      .attr("class", "Empire")
       .attr("d", path)
       .style("stroke", "#999")
       .style("stroke-width", 0.2);    
