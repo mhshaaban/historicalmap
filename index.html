@@ -43,10 +43,27 @@ svg .ferry_path {
 
 }
 
+#info {
+	position:absolute;
+	top:70px;
+	left:10px;
+	padding:10px;
+	z-index: 10;
+	margin:0;
+	width:330px;
+	height:230px;
+	background-color: rgba(0, 0, 0, 0.55);
+	color: #c2b59b;
+}
+
 </style>
 <body>
 
-<div id="map"></div>
+<div id="map">
+  
+<div id="info">  
+  <h2>Mapping The Empire</h2>
+</div>
 <script src="http://riccardoscalco.github.io/textures/textures.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
